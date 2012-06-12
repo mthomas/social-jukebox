@@ -1,0 +1,202 @@
+<html>
+<head>
+<title>Juke Controller</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name = "viewport" content = "width = 250, initial-scale = 1.23, user-scalable = no">
+
+<script src='static/spire.io.bundle.min.js'></script>
+<!--<script src='sampleQueue.js'></script>-->
+<script>
+
+function getEl(id){
+    return document.getElementById(id);
+}
+
+ACCOUNT_SECRET_GOES_HERE="{{ SPIRE_SECRET }}";
+DOMAIN="{{ DOMAIN }}"
+
+function getQueue(cb){
+    
+//    cb(sampleQueue);
+//    return;
+    
+    var request = new XMLHttpRequest();  
+    request.onreadystatechange = function(){
+        if(this.readyState == this.DONE && this.status == 200){
+            cb(JSON.parse(this.responseText));
+        }
+    }
+    request.open('GET', DOMAIN +'/queue');  
+    request.send();  
+}
+
+
+function init(){
+
+    var skipButton=getEl('skipButton');
+    var volSlider=getEl('volSlider');
+    var playButton=getEl('playButton');
+    var pauseButton=getEl('pauseButton');
+    
+    var Spire = require('./spire.io.js');
+    var spire = new Spire();
+    
+    window.spire=spire;
+    
+    spire.start(ACCOUNT_SECRET_GOES_HERE, function (error) {
+                        
+        if (!error) {
+            spire.session.subscribe(["Juke"], {min_timestamp:'now'}, function(messages) {
+                
+                console.log(messages);
+                
+                
+                for(var i in messages){
+                    
+                    
+                    if(!messages[i].content)
+                        continue;
+                        
+                    var content=messages[i].content;
+                    
+                    //var playStates=['paused','playing','stopped','buffering','paused'];
+                    
+                    
+                    if(content.playState){
+                        
+                        if(content.playState=='playing'){
+                            playButton.style.display='none';
+                            pauseButton.style.display='block';
+                        }else{
+                            playButton.style.display='block';
+                            pauseButton.style.display='none';
+                        }
+                    }
+                    
+                    
+                    if(content.playingTrack){
+                        getEl('trackArtist').innerHTML=content.playingTrack.artist;
+                        getEl('trackName').innerHTML=content.playingTrack.name;
+                        getEl('trackIcon').src=content.playingTrack.icon;
+                        
+                    }
+                    
+                }
+                
+                
+            });
+            
+            spire.session.publish('Juke',{action:'sendState'});
+        }
+    });
+    
+    skipButton.onclick=function(){
+        spire.session.publish('Juke',{action:'skip'});      
+    }
+    
+    volSlider.onchange=function(){
+        spire.session.publish('Juke',{action:'setVolume',value:volSlider.value/100});      
+    }
+    
+    
+    playButton.onclick=function(){
+        spire.session.publish('Juke',{action:'play'});      
+    }
+    
+    pauseButton.onclick=function(){
+        spire.session.publish('Juke',{action:'pause'});      
+    }
+
+    
+    var nextID=-1;
+    setInterval(function(){
+        getQueue(function(q){
+            var nextTrack=q.queue[0];
+            
+            if(nextTrack.id!=nextID){
+                nextID=nextTrack.id;
+
+                getEl('nextArtist').innerHTML=nextTrack.artistName;
+                getEl('nextName').innerHTML=nextTrack.trackName;
+                getEl('nextIcon').src=nextTrack.icon;
+            }
+            
+        });
+    },1000);
+}
+
+
+
+</script>
+
+<style>
+body{
+    font-family: Lucida Grande, Lucida Sans Unicode, sans-serif;
+    background-color:#111;
+    color:#EEE;
+    
+}
+
+button{
+    font-size:300%;
+    width:240px;
+}
+
+#volSlider{
+    /*-webkit-appearance: slider-vertical;*/
+    width: 230px;
+    height: 30px; 
+}
+#trackIcon,
+#nextIcon{
+    /*-webkit-appearance: slider-vertical;*/
+    width: 80px;
+    height: 80px;
+    float:left;
+    display:block;
+    margin:5px;
+    margin-right:10px;
+    margin-bottom:10px;
+}
+
+.sectionTitle{
+    /*font-size:120%;*/
+    font-weight:bold;
+    color:#888;
+    margin-bottom:3px;
+    clear:both;
+}
+#trackName,#nextName{
+    font-style:italic;
+}
+#trackArtist, #trackName,
+#nextArtist, #nextName{
+    margin-top:0px;
+    margin-bottom:7px;
+}
+</style>
+
+</head>
+<body onload='init()'>
+
+<button id='skipButton'>skip</button><br />
+
+<button id='playButton' >play</button>
+<button id='pauseButton' style='display:none;'>pause</button>
+
+<input type='range' id='volSlider' min="0" max="100" step="1" value="100"/>
+
+<div class='sectionTitle'>Now playing:</div>
+<img id='trackIcon' />
+<p id='trackArtist'></p>
+<p id='trackName'></p>
+
+<div class='sectionTitle'>Up next:</div>
+<img id='nextIcon' />
+<p id='nextArtist'></p>
+<p id='nextName'></p>
+
+
+</body>
+</html>

@@ -1,0 +1,8 @@
+venv
+*.pyc
+.idea
+templates/*.js
+templates/*.css
+templates/static
+configure.sh
+.env

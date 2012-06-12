@@ -1,0 +1,191 @@
+html, body {
+    width: 100%;
+    height: 100%;
+
+    font-family: Arial;
+
+    margin: 0;
+    padding: 0;
+
+    background: #2d2d2d;
+
+    overflow: hidden;
+}
+
+div.header {
+    width: 100%;
+
+    position: fixed;
+    z-index: 100;
+
+    top: 0;
+    left: 0;
+
+    background: #2d2d2d;
+    border-bottom: 2px solid #33B5E5;
+
+}
+
+div.content {
+    height: 100%;
+
+    position: relative;
+
+    overlay: hidden;
+}
+
+
+div#playing {
+    font-size: 500%;
+}
+
+div#playing div.title span.resizer{
+    float: left;
+    white-space: nowrap;
+}
+
+div.song {
+    color: white;
+
+    margin: 2%;
+
+    overflow: hidden;
+}
+
+div.playlist div.song {
+}
+
+div.song div.title, div.song div.artist {
+    width: 75%;
+
+    overflow: hidden;
+    height: 1.2em;
+    position:relative;
+
+    float: left;
+}
+
+span.resizer {
+    display: block;
+    position: absolute;
+}
+
+div.song div.title {
+    font-weight: bold;
+}
+
+div.song div.artist {
+    width: 75%;
+
+    float: left;
+
+    font-size: 70%;
+
+    color: #CCCCCC;
+}
+
+div.artist {}
+
+div.song div.remaining {
+    width: 20%;
+
+    margin-top: 2%;
+
+    float: right;
+
+    font-weight: bold;
+    text-align: center;
+}
+
+div.playlist {
+    width: 100%;
+    margin: 0 auto;
+}
+
+div.playlist div.remaining {
+    display: none;
+}
+
+
+div.playlist div.song, div.playlist div.message {
+    font-size: 250%;
+}
+
+div.playlist div.message {
+    color: white;
+    margin-left: 2%;
+}
+
+div.view {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+
+    position: absolute;
+
+    float: left;
+
+    color: white;
+    overflow: hidden;
+}
+
+div.view:last-child {
+    border-right: 0;
+}
+
+div.wrapper {
+    position: relative;
+}
+
+div.viewContent {
+    position: absolute;
+
+}
+
+div.centerer {
+    position: relative;
+
+}
+
+canvas {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.votePage div.remaining {
+    display: none;
+}
+
+div.page {
+    display: none;
+}
+
+div.active {
+    background: rgba(45, 45, 45, 0.8);
+}
+
+div.page p {
+    margin: 15% 2% 2% 2%;
+    font-size: 300%;
+    max-width: 60%;
+}
+
+div.votePage p {
+    max-width: 80%;
+}
+
+div.footer {
+    position: absolute;
+    bottom: 1%;
+    right: 1%;
+    color: white;
+    font-size: 500%;
+    font-weight: bold;
+}
+
+b, span#songName, span#artistName {
+    color: white;
+    font-size: 120%;
+    font-weight: bold;
+}

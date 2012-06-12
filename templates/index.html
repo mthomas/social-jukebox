@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+    <script src="static/jquery-1.7.2.min.js"></script>
+    <script src='static/spire.io.bundle.min.js'></script>
+    <link href="static/style.css" rel="stylesheet" />
+    <script>
+        var API_URL = "http://{{DOMAIN}}";
+        var ACCOUNT_SECRET_GOES_HERE = "{{SPIRE_SECRET}}";
+        
+        function Rdio() {}
+        Rdio.prototype.addSongOverCallback = function (func) {};
+        Rdio.prototype.play = function (id) {};
+        Rdio.prototype.addSongStepCallback = function (func) {
+            setInterval(function() {
+                func(Math.floor(Math.random() * 200));
+            }, 1000);
+        };
+
+    </script>
+
+    <script src="static/swfobject.js"></script>
+    <script src="static/rdio.js"></script>
+    <script src="static/spire.js"></script>
+    <script src="static/api.js"></script>
+    <script src="static/slider.js"></script>
+    <script src="static/vizBars.js"></script>
+    <script src="static/jukebox.js"></script>
+
+</head>
+<body>
+<div id="templates" style="display:none;">
+    <div class="song">
+        <div class="remaining">0:00</div>
+        <div class="title"><span class="resizer">...</span></div>
+        <div class="artist"><span class="resizer">...</span></div>
+    </div>
+</div>
+    <div class="header">
+        <div class="song" id="playing">
+            <div class="remaining">0:00</div>
+            <div class="title"><span class="resizer" style="display: block;"></span></div>
+            <div class="artist"><span class="resizer">Loading...</span></div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="view">
+            <canvas id="bars"></canvas>
+        </div>
+        <div class="view page">
+            <div class="playlist">
+                <div class="message">
+                    <span><span class="count">5</span> more...</span>
+                </div>
+            </div>
+        </div>
+        <div class="view page">
+            <p><b>Text</b> the <b>name of any artist or song</b> to add it to the playlist</p>
+        </div>
+        <div class="view page">
+            <p><b>Text "BUY"</b> to buy this song from Amazon</p>
+        </div>
+        <div class="view page">
+            <p><b>Text "LYRICS"</b> to get the lyrics to this song</p>
+        </div>
+        <div class="view page votePage">
+            <p><b>Text "VOTE <span id="songId">123</span>"</b> to promote<br/>
+                "<span id="songName">Sex On Fire</span>"</p>
+        </div>
+        <div class="footer">
+            310&nbsp;341&nbsp;0003
+        </div>
+    </div>
+    <div id='playerBox' style='visibility:hidden'></div>
+</body>
+</html>

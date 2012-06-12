@@ -1,0 +1,17 @@
+<html>
+  <head>
+      <title>{{track["track_name"]}} by {{track["artist_name"]}}</title>
+      <link type="text/css" rel="stylesheet" href="/static/style.css" />
+      <meta name = "viewport" content = "width = device-width">
+      <meta name = "viewport" content = "initial-scale = 1.0">
+  </head>
+  <body>
+    <div style="color: #FFF; text-transform:uppercase; font-weight: bold">{{track["track_name"]}}</div>
+    <div style="color: #CCC">by {{track["artist_name"]}}</div>
+    <div style="color: #fff; margin-top: 30px">
+    {% autoescape false %}
+      {{ lyrics.decode("ascii", "ignore") }}
+    {% endautoescape %}
+    </div>
+  </body>
+</html>s

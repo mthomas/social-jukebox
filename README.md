@@ -1,6 +1,7 @@
 Social Jukebox allows you to send song requests in via SMS.  The songs are then played through the web front end.  
 
-h1. Installation
+Installation
+============
 
 Social Jukebox is designed to be hosted on Heroku.  So set up a Heroku app and a Postgers database.
 

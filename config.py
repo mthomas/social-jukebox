@@ -12,7 +12,6 @@ TWILIO_NUMBER = os.environ.get("TWILIO_NUMBER")
 RDIO_KEY = os.environ.get("RDIO_KEY")
 RDIO_SECRET = os.environ.get("RDIO_SECRET")
 
-
 AWS_ACCESS_KEY = os.environ.get("AWS_ACCESS_KEY")
 AWS_SECRET_KEY = os.environ.get("AWS_SECRET_KEY")
 AWS_AFFILIATE_CODE = os.environ.get("AWS_AFFILIATE_CODE")
